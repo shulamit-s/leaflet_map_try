@@ -1,5 +1,8 @@
 # leaflet_map_try
 
-  ```
-<iframe src="https://www.google.com/maps" frameborder="0" width="600" height="400"></iframe>  
-  ```
+```
+<script src="../webcomponentsjs/webcomponents-lite.min.js"></script>
+<link rel="import" href="leaflet-map.html">
+
+<leaflet-map> </leaflet-map>
+```
