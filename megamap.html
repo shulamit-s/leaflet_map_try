@@ -1,3 +1,41 @@
+library(readr)
+library(sf)
+library(leaflet)
+library(leaflet.extras)
+library(dbscan)
+library(dplyr)
+library(geosphere)
+library(magrittr)
+library(webshot)
+library(mapview)
+
+
+
+urban_domestic_wells <- read_sf("C:/Users/SShroder/OneDrive - Water Boards/R/Infiltration/Communication_Plan/Raw_data/Domestic_wells_urban/domestic_wells_urban.shp")
+
+
+urban_domestic_wells <- st_transform(urban_domestic_wells, 4326)
+
+
+binpal <- colorBin("RdYlBu", urban_domestic_wells$dwr_dm_, 9, pretty = FALSE)
+
+
+
+CES_many_wells_urban <- read_sf("C:/Users/SShroder/OneDrive - Water Boards/R/Infiltration/Communication_Plan/Raw_data/CES_many_domestic_wells_urba/CES_domestic.shp")
+CES_many_wells_urban <- st_transform(CES_many_wells_urban, 4326)
+
+
+
+bin_ces <- colorBin("YlOrRd", CES_many_wells_urban$ciscorep, 9, pretty = FALSE)
+
+combined_risk <- read_sf("C:/Users/SShroder/OneDrive - Water Boards/R/Infiltration/Communication_Plan/Raw_data/Combined_risk_score_2024.shp")
+combined_risk <- st_transform(combined_risk, 4326)
+mapview(combined_risk)
+
+palrisk <- leaflet::colorFactor(palette = c("red", "green", "yellow"), 
+                               domain = combined_risk$crbin)
+
+
 big_map <- leaflet() %>%
   addProviderTiles(providers$CartoDB.PositronNoLabels, group = "No Labels")  %>%
   addTiles(group = "OSM (default)") %>%
